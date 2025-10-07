@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import api from "../api";
 
 const PropertyDetail = () => {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
 
   useEffect(() => {
-    api.get(`/property`).then((res) => {
-      const found = res.data.find((p) => p.id === id);
-      setProperty(found);
-    });
+    // api.get(`/property`).then((res) => {
+    //   const found = res.data.find((p) => p.id === id);
+    //   setProperty(found);
+    // });
   }, [id]);
 
   if (!property) return <p>Cargando...</p>;

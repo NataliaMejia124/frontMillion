@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import PropertyDetail from "../components/PropertyDetail";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Box, Typography } from "@mui/material";
-import { fetchPropertyDetail } from "../services/propertyService";
+import { getPropertyDetail } from "../services/propertyService";
 import { useParams } from "react-router-dom";
 
 const DetailPage = () => {
@@ -33,22 +32,26 @@ const DetailPage = () => {
   ];
 
   useEffect(() => {
-    const subscription = fetchPropertyDetail(id).subscribe({
-      next: (data) => setProperty(data),
-      error: (err) => setError(err.message),
-    });
+    const fetchPropertyDetail = async () => {
+      try {
+        const data = await getPropertyDetail(id);
+        const formattedImages = data.images.map((url) => ({
+          original: url,
+          thumbnail: url,
+        }));
+        console.log("verrrr las imagenes", data);
+        console.log("verrrr las imagenes", formattedImages);
+        setProperty({ ...data, images: formattedImages });
+      } catch (err) {
+        setError(err.message);
+      }
+    };
 
-    return () => subscription.unsubscribe();
+    fetchPropertyDetail();
   }, []);
 
   console.log("ver detalle::", property);
-  // const property = {
-  //   name: "Casa moderna en la playa",
-  //   address: "Av. Costanera 1234, Viña del Mar",
-  //   price: 350000,
-  //   description:
-  //     "Una hermosa propiedad con vista al mar, 4 habitaciones, 3 baños, piscina y terraza.",
-  // };
+
   return (
     <Box
       sx={{
@@ -60,15 +63,13 @@ const DetailPage = () => {
         padding: 4,
       }}
     >
-      {/* Columna izquierda: Galería */}
       <Box sx={{ flex: 1 }}>
-        <ImageGallery items={images} />
+        <ImageGallery items={property?.images || []} />
       </Box>
 
-      {/* Columna derecha: Información */}
       <Box sx={{ flex: 1 }}>
         <Typography variant="h4" gutterBottom>
-          {property.name}
+          {`${property.name} ${property.year}`}
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
           📍 {property.address}

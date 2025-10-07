@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchProperties } from "../services/propertyService";
+import { getAllProperties } from "../services/propertyService";
 
 const PropertyList = () => {
   const [properties, setProperties] = useState([]);
@@ -28,12 +28,16 @@ const PropertyList = () => {
       pageSize: 10,
     };
 
-    const subscription = fetchProperties(filters).subscribe({
-      next: (data) => setProperties(data.properties),
-      error: (err) => setError(err.message),
-    });
+    const fetchProperties = async () => {
+      try {
+        const data = await getAllProperties(filters);
+        setProperties(data.properties);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
 
-    return () => subscription.unsubscribe();
+    fetchProperties();
   }, []);
 
   // console.log("ver que me trajo del backk::", data);
@@ -41,8 +45,20 @@ const PropertyList = () => {
 
   return (
     <div>
-      <h3>Properties for sale</h3>
       <Box sx={{ maxWidth: 2300, mx: "auto", px: 2, py: 4 }}>
+        <Typography
+          variant="h3"
+          align="center"
+          sx={{
+            color: "primary.main",
+            fontWeight: "bold",
+            fontFamily: "'Roboto', 'Helvetica Neue', sans-serif",
+            mb: 4,
+          }}
+        >
+          Properties for Sale
+        </Typography>
+
         <Grid container spacing={4} justifyContent="center">
           {properties.map((property) => (
             <Grid
@@ -67,7 +83,7 @@ const PropertyList = () => {
                   <CardMedia
                     component="img"
                     height="400"
-                    image="https://images.unsplash.com/photo-1625602812206-5ec545ca1231?q=80&w=1170&auto=format&fit=crop"
+                    image={property.mainImageUrl}
                     alt="Propiedad"
                     sx={{ transition: "transform 0.5s ease" }}
                   />
@@ -88,9 +104,9 @@ const PropertyList = () => {
                 </CardContent>
 
                 <CardActions sx={{ justifyContent: "space-between", px: 2 }}>
-                  <Button size="small" variant="contained" color="primary">
+                  {/* <Button size="small" variant="contained" color="primary">
                     Ver Detalle
-                  </Button>
+                  </Button> */}
                   <Link to={`/property/${property.id}`}>Más info</Link>
                 </CardActions>
               </Card>
