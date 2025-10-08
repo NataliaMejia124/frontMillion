@@ -1,12 +1,15 @@
 import PropertyList from "../components/PropertyList";
 import PropertyCarousel from "../components/Carousel";
 
-const Home = () => {
+const Home = ({ searchTerm }) => {
   return (
-    <div className="home">
-      <PropertyCarousel />
-      <PropertyList />
-    </div>
+    console.log("Buscando con término home:", searchTerm),
+    (
+      <div className="home">
+        <PropertyCarousel />
+        <PropertyList searchTerm={searchTerm} />
+      </div>
+    )
   );
 };
 

@@ -6,17 +6,14 @@ import Navbar from "./components/Navbar";
 import "./App.css";
 
 function App() {
-  const [searchFilters, setSearchFilters] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearch = (searchTerm) => {
-    setSearchFilters({ name: searchTerm });
-  };
 
   return (
     <Router>
-      <Navbar onSearch={handleSearch} />
+      <Navbar onSearch={(term) => setSearchTerm(term)} />
       <Routes>
-        <Route path="/" element={<Home filters={searchFilters} />} />
+        <Route path="/" element={<Home searchTerm={searchTerm} />} />
         <Route path="/property/:id" element={<DetailPage />} />
       </Routes>
     </Router>

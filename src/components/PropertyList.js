@@ -12,13 +12,15 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllProperties } from "../services/propertyService";
 
-const PropertyList = () => {
+const PropertyList = ({ searchTerm }) => {
   const [properties, setProperties] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log("Buscando con término:", searchTerm);
+
     const filters = {
-      name: "",
+      name: searchTerm || "",
       address: "",
       minPrice: "",
       maxPrice: "",
@@ -38,7 +40,7 @@ const PropertyList = () => {
     };
 
     fetchProperties();
-  }, []);
+  }, [searchTerm]);
 
   // console.log("ver que me trajo del backk::", data);
   console.log("ver que me trajo del backk::", properties);
