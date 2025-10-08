@@ -4,7 +4,6 @@ import {
   CardMedia,
   Typography,
   CardActions,
-  Button,
   Box,
   Grid,
 } from "@mui/material";
@@ -95,9 +94,6 @@ const PropertyList = ({ filters }) => {
                 </CardContent>
 
                 <CardActions sx={{ justifyContent: "space-between", px: 2 }}>
-                  {/* <Button size="small" variant="contained" color="primary">
-                    Ver Detalle
-                  </Button> */}
                   <Link to={`/property/${property.id}`}>Más info</Link>
                 </CardActions>
               </Card>

@@ -19,15 +19,6 @@ const Search = styled("form")(({ theme }) => ({
   flexWrap: "wrap",
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  paddingLeft: theme.spacing(2),
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1),
-    width: "200px",
-  },
-}));
-
 const Navbar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [address, setAddress] = useState("");
@@ -79,21 +70,21 @@ const Navbar = ({ onSearch }) => {
           <TextField
             variant="outlined"
             size="small"
-            label="Buscar por nombre"
+            label="Search by name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <TextField
             variant="outlined"
             size="small"
-            label="Buscar por dirección"
+            label="Search by address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
           <TextField
             variant="outlined"
             size="small"
-            label="Precio mínimo"
+            label="Minimum price"
             type="number"
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
@@ -101,14 +92,14 @@ const Navbar = ({ onSearch }) => {
           <TextField
             variant="outlined"
             size="small"
-            label="Precio máximo"
+            label="Maximum price"
             type="number"
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
           />
 
           <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
-            Buscar
+            Search
           </Button>
         </Box>
       </Toolbar>

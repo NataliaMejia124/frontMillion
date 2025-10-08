@@ -5,7 +5,7 @@ import "./Carousel.scss";
 
 const images = [
   {
-    label: "Nata Inmobiliaria",
+    label: "Nata RealState",
     imgPath:
       "https://nexoinmobiliario.pe/blog/wp-content/uploads/2022/07/fondo-inversion-inmobiliaria-nexo-inmobiliaria.jpg",
   },
