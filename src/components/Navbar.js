@@ -1,77 +1,115 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, InputBase, Box, IconButton } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  InputBase,
+  Box,
+  TextField,
+  Button,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import { styled, alpha } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
-const Search = styled('form')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  display: 'flex',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled(IconButton)(({ theme }) => ({
-  padding: theme.spacing(0.5),
-  height: '100%',
-  pointerEvents: 'visible',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: 'white',
+const Search = styled("form")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: theme.spacing(2),
+  flexWrap: "wrap",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
+  color: "inherit",
   paddingLeft: theme.spacing(2),
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    width: '200px',
-    [theme.breakpoints.up('md')]: {
-      width: '250px',
-    },
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1),
+    width: "200px",
   },
 }));
 
 const Navbar = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [address, setAddress] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(searchTerm);
-    navigate('/');
+
+    const filters = {
+      name: searchTerm,
+      address: address,
+      minPrice: minPrice || "",
+      maxPrice: maxPrice || "",
+    };
+
+    onSearch(filters);
+    navigate("/");
   };
 
   return (
-    <AppBar position="static">
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-        <Typography variant="h6" onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
+    <AppBar position="static" sx={{ py: 1 }}>
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+        }}
+      >
+        <Typography
+          variant="h6"
+          onClick={() => navigate("/")}
+          sx={{ cursor: "pointer" }}
+        >
           🏠 RealEstateApp
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Search onSubmit={handleSubmit}>
-            <StyledInputBase
-              placeholder="Buscar por nombre..."
-              inputProps={{ 'aria-label': 'search' }}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <SearchIconWrapper type="submit" onClick={handleSubmit}>
-              <SearchIcon />
-            </SearchIconWrapper>
-          </Search>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            flexWrap: "wrap",
+          }}
+        >
+          <TextField
+            variant="outlined"
+            size="small"
+            label="Buscar por nombre"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            size="small"
+            label="Buscar por dirección"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            size="small"
+            label="Precio mínimo"
+            type="number"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            size="small"
+            label="Precio máximo"
+            type="number"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+          />
+
+          <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
+            Buscar
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>

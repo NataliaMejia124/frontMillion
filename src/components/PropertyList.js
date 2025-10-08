@@ -12,23 +12,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllProperties } from "../services/propertyService";
 
-const PropertyList = ({ searchTerm }) => {
+const PropertyList = ({ filters }) => {
   const [properties, setProperties] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log("Buscando con término:", searchTerm);
-
-    const filters = {
-      name: searchTerm || "",
-      address: "",
-      minPrice: "",
-      maxPrice: "",
-      minYear: "",
-      maxYear: "",
-      pageNumber: 1,
-      pageSize: 10,
-    };
+    console.log("Buscando con término:", filters);
 
     const fetchProperties = async () => {
       try {
@@ -40,7 +29,7 @@ const PropertyList = ({ searchTerm }) => {
     };
 
     fetchProperties();
-  }, [searchTerm]);
+  }, [filters]);
 
   // console.log("ver que me trajo del backk::", data);
   console.log("ver que me trajo del backk::", properties);
