@@ -3,13 +3,10 @@ import PropertyCarousel from "../components/Carousel";
 
 const Home = ({ filters }) => {
   return (
-    console.log("filtro que llega al  home:", filters),
-    (
-      <div className="home">
-        <PropertyCarousel />
-        <PropertyList filters={filters} />
-      </div>
-    )
+    <div className="home">
+      <PropertyCarousel />
+      <PropertyList filters={filters} />
+    </div>
   );
 };
 
