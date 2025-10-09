@@ -51,6 +51,24 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "babel-jest": "^30.2.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    },
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-router-dom)/)"
+    ],
+    "roots": ["<rootDir>/src"],
+    "modulePaths": ["<rootDir>/src"]
   }
 }

@@ -1,3 +1,4 @@
+import React from "react";
 import PropertyList from "../components/PropertyList";
 import PropertyCarousel from "../components/Carousel";
 
